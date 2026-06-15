@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETCARE - Operação Técnica Gerenciada</title>
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://files.catbox.moe">
+    
+    <!-- Google Fonts: Ubuntu (Headings) & Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        netcare: {
+                            purple: '#390ea6',
+                            purple_light: '#5c22d3',
+                            yellow: '#e5f034',
+                            light: '#f8f9fa',
+                            dark: '#111111',
+                            gray: '#4a4a4a'
+                        }
+                    },
+                    fontFamily: {
+                        ubuntu: ['Ubuntu', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS Personalizado -->
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-padding-top: 80px;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .font-ubuntu {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        /* Animações Institucionais */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Linha do Tempo (Timeline Central) */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #e5e7eb 5%, #e5e7eb 95%, transparent);
+            z-index: 0;
+        }
+        @media (min-width: 1024px) {
+            .timeline-line::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Destaques Tipográficos */
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.75rem;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            width: 80px;
+            background-color: #e5f034;
+            border-radius: 2px;
+        }
+        .heading-underline-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Imagem da Capa com Zoom Lento */
+        .hero-bg {
+            animation: slowZoom 25s linear infinite;
+        }
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Espaçamento Institucional (Área de Respiro) */
+        .pdf-section {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+        @media (min-width: 1024px) {
+            .pdf-section {
+                padding-top: 10rem;
+                padding-bottom: 10rem;
+            }
+        }
+
+        /* Diagrama de Venn (Propósito) */
+        .venn-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            position: absolute;
+            mix-blend-mode: multiply;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 1.15rem;
+            text-align: center;
+            border: 4px solid;
+            background-color: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+        }
+        .venn-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+        }
+        .venn-top { top: 0; left: 70px; border-color: #390ea6; color: #390ea6; z-index: 2; }
+        .venn-left { bottom: 30px; left: 0; border-color: #e5e7eb; color: #4a4a4a; z-index: 1; }
+        .venn-right { bottom: 30px; right: 0; border-color: #e5e7eb; color: #4a4a4a; z-index: 1; }
+        .venn-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            z-index: 10;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: #390ea6;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* Lightbox para visualização de imagens */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        #lightbox.active img {
+            transform: scale(1);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .clickable-img {
+            cursor: zoom-in;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Corporativo -->
+    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex justify-between items-center">
+            <a href="#capa" class="flex-shrink-0">
+                <img src="https://files.catbox.moe/wiudbm.png" alt="Netcare Logo" class="h-8 object-contain" fetchpriority="high">
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <div class="relative group">
+                    <a href="#capa" class="text-sm font-semibold text-gray-700 hover:text-netcare-purple transition-colors">Página inicial</a>
+                    <div class="absolute left-0 z-20 mt-3 w-56 rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
+                        <div class="p-4 space-y-2">
+                            <a href="#data-center" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">Data Center</a>
+                            <a href="#capacidades" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">Capacidades</a>
+                            <a href="#cultura" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">Cultura</a>
+                            <a href="#diferenciais" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">Diferenciais</a>
+                            <a href="#contato" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">Fale Conosco</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <a href="#historia" class="text-sm font-semibold text-gray-700 hover:text-netcare-purple transition-colors">Nossa História</a>
+                    <div class="absolute left-0 z-20 mt-3 w-56 rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
+                        <div class="p-4 space-y-2">
+                            <a href="#frota" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors">A Frota</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="galeria.html" class="text-sm font-semibold text-gray-700 hover:text-netcare-purple transition-colors">Galeria</a>
+            </nav>
+
+            <a href="#contato" class="hidden md:flex bg-netcare-purple text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-netcare-dark transition-colors shadow-sm">Fale Conosco</a>
+
+            <!-- Botão Menu Mobile -->
+            <div class="lg:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-netcare-dark focus:outline-none p-2">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Painel Menu Mobile -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl max-h-[80vh] overflow-y-auto">
+            <div class="px-6 py-6 space-y-6">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Página inicial</p>
+                    <a href="#capa" class="block text-base font-semibold text-gray-800 mb-3">Tela Inicial</a>
+                    <a href="#data-center" class="block text-base font-semibold text-gray-800 mb-3">Data Center</a>
+                    <a href="#capacidades" class="block text-base font-semibold text-gray-800 mb-3">Capacidades</a>
+                    <a href="#cultura" class="block text-base font-semibold text-gray-800 mb-3">Cultura</a>
+                    <a href="#diferenciais" class="block text-base font-semibold text-gray-800 mb-3">Diferenciais</a>
+                    <a href="#contato" class="block text-base font-semibold text-gray-800">Fale Conosco</a>
+                </div>
+                <div class="pt-6 border-t border-gray-100">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Nossa História</p>
+                    <a href="#historia" class="block text-base font-semibold text-gray-800 mb-3">Nossa História</a>
+                    <a href="#frota" class="block text-base font-semibold text-gray-800">A Frota Operacional</a>
+                </div>
+                <div class="pt-6 border-t border-gray-100">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Galeria</p>
+                    <a href="galeria.html" class="block text-base font-semibold text-gray-800">Galeria</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Capa Histórica) -->
+    <section id="capa" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-netcare-dark overflow-hidden min-h-[90vh] flex items-center">
+        <!-- Background com a História da Netcare (Equipa no campo) -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="https://files.catbox.moe/5rsu7n.jpeg" class="w-full h-full object-cover object-center hero-bg opacity-40 grayscale clickable-img" fetchpriority="high" alt="Equipa Netcare no Campo em 2006">
+            <!-- Gradiente Escuro para Leitura -->
+            <div class="absolute inset-0 bg-gradient-to-r from-netcare-dark via-netcare-dark/90 to-netcare-dark/50 pointer-events-none"></div>
+            <!-- Sobreposição Roxa Sutil -->
+            <div class="absolute inset-0 bg-netcare-purple/20 mix-blend-multiply pointer-events-none"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full fade-up pointer-events-none">
+            <div class="max-w-3xl pointer-events-auto">
+                <div class="flex items-center space-x-3 mb-8">
+                    <span class="h-[1px] w-8 bg-netcare-yellow"></span>
+                    <span class="text-netcare-yellow text-xs font-bold tracking-[0.2em] uppercase">
+                        Dossiê Corporativo • Desde 2006
+                    </span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight font-ubuntu mb-8 tracking-tight">
+                    Operação Técnica <span class="text-netcare-yellow">Gerenciada.</span>
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-gray-300 font-light mb-12 leading-relaxed border-l-2 border-white/20 pl-6">
+                    Conectando pessoas, tecnologias e possibilidades desde o primeiro dia. Infraestrutura de campo, data center, energia e redes ópticas com quase 20 anos de experiência prática.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#historia" class="bg-netcare-yellow text-netcare-dark px-8 py-4 rounded font-bold hover:bg-white transition-colors shadow-lg">Conhecer o Legado</a>
+                    <a href="#contato" class="bg-white/10 text-white px-8 py-4 rounded font-bold border border-white/20 hover:bg-white/20 transition-colors backdrop-blur-sm">Falar com um Especialista</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifesto Institucional -->
+    <section class="py-20 lg:py-24 bg-netcare-purple text-white border-b-8 border-netcare-yellow relative z-20 -mt-8 mx-4 sm:mx-8 max-w-7xl lg:mx-auto rounded-xl shadow-2xl">
+        <div class="px-8 md:px-16 text-center fade-up">
+            <h2 class="text-2xl sm:text-3xl font-bold font-ubuntu mb-6 text-netcare-yellow">O Manifesto NETCARE</h2>
+            <p class="text-lg md:text-2xl font-light leading-relaxed max-w-4xl mx-auto">
+                "Nascemos no campo, amadurecemos em operações críticas e hoje unimos técnica, segurança e propósito para servir empresas que precisam de infraestrutura confiável."
+            </p>
+        </div>
+    </section>
+
+    <!-- Nossa História (Timeline Corporativa) -->
+    <section id="historia" class="pdf-section bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            
+            <div class="text-center max-w-4xl mx-auto mb-24 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-dark heading-underline heading-underline-center mb-8">Nossa Trajetória</h2>
+                <p class="text-xl text-gray-600 font-light leading-relaxed mt-6">
+                    Um legado construído na prática. Carregamos o DNA técnico desde 2006, evoluindo de execuções pontuais para operações gerenciadas de ponta a ponta.
+                </p>
+            </div>
+
+            <div class="timeline-line relative space-y-20 lg:space-y-32">
+                
+                <!-- 2006: A Fundação -->
+                <div class="relative flex flex-col lg:flex-row items-center fade-up">
+                    <div class="hidden lg:block absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-netcare-yellow rounded-full border-4 border-netcare-purple z-10"></div>
+                    <div class="lg:hidden absolute left-[20px] -translate-x-1/2 w-3 h-3 bg-netcare-purple rounded-full z-10 mt-2"></div>
+                    
+                    <div class="lg:w-1/2 lg:pr-20 text-left lg:text-right pl-12 lg:pl-0 mb-8 lg:mb-0 w-full">
+                        <span class="text-gray-300 font-black text-5xl font-ubuntu block mb-4">2006</span>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">O Primeiro Dia</h3>
+                        <p class="text-gray-600 leading-relaxed text-base sm:text-lg">
+                            A NETCARE iniciou sua operação em 2006, quando ainda se chamava Conectiva. Foram anos de desafios, aprendizado e construção de base técnica. Começamos com foco em fusão de fibra óptica e montagem de caixas de emenda, atuando em contratos de grandes operadoras da época, como <strong>GVT e Brasil Telecom</strong>.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2 lg:pl-20 pl-12 lg:pl-0 w-full">
+                        <div class="overflow-hidden rounded-xl shadow-lg border border-gray-100">
+                            <img src="https://files.catbox.moe/dmnyn2.jpeg" alt="O Início da Conectiva" class="w-full h-72 object-cover clickable-img hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4 border-l-2 border-netcare-yellow pl-3">As raízes da equipa nas estradas de terra do Paraná.</p>
+                    </div>
+                </div>
+
+                <!-- Evolução e OPGW -->
+                <div class="relative flex flex-col lg:flex-row-reverse items-center fade-up">
+                    <div class="hidden lg:block absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-netcare-purple rounded-full border-4 border-white z-10 shadow-sm"></div>
+                    <div class="lg:hidden absolute left-[20px] -translate-x-1/2 w-3 h-3 bg-netcare-purple rounded-full z-10 mt-2"></div>
+
+                    <div class="lg:w-1/2 lg:pl-20 text-left pl-12 lg:pl-0 mb-8 lg:mb-0 w-full">
+                        <span class="text-gray-300 font-black text-3xl font-ubuntu uppercase tracking-widest block mb-4">Evolução Técnica</span>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">Ambientes Críticos & OPGW</h3>
+                        <p class="text-gray-600 leading-relaxed text-base sm:text-lg mb-4">
+                            Tornamo-nos referência em projetos exigentes. Um marco foi o trabalho para a <strong>Universidade Estadual de Maringá (UEM)</strong>, onde cuidamos por mais de três anos da infraestrutura de rede, entregando confiabilidade em um ambiente crítico.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-base sm:text-lg">
+                            Outro ponto foi a especialização em emendas OPGW em linhas de transmissão. Por mais de dez anos, executamos implantação em mais de 10 estados do Brasil, acumulando experiência em logística de campo e alta exigência.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2 lg:pr-20 pl-12 lg:pl-0 w-full">
+                        <div class="overflow-hidden rounded-xl shadow-lg border border-gray-100">
+                            <img src="https://files.catbox.moe/rumedv.jpeg" alt="Obras em Viadutos" class="w-full h-80 object-cover clickable-img hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4 lg:text-right border-l-2 lg:border-l-0 lg:border-r-2 border-netcare-purple pl-3 lg:pr-3">Operações complexas em altura utilizando cesto aéreo.</p>
+                    </div>
+                </div>
+
+                <!-- 2013-2023: Fibercom -->
+                <div class="relative flex flex-col lg:flex-row items-center fade-up">
+                    <div class="hidden lg:block absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-netcare-purple rounded-full border-4 border-white z-10 shadow-sm"></div>
+                    <div class="lg:hidden absolute left-[20px] -translate-x-1/2 w-3 h-3 bg-netcare-purple rounded-full z-10 mt-2"></div>
+
+                    <div class="lg:w-1/2 lg:pr-20 text-left lg:text-right pl-12 lg:pl-0 mb-8 lg:mb-0 w-full">
+                        <span class="text-gray-300 font-black text-4xl font-ubuntu block mb-4">2013 a 2023</span>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">Escala e Exclusividade</h3>
+                        <p class="text-gray-600 leading-relaxed text-base sm:text-lg">
+                            Surgiu a <strong>Fibercom Telecomunicações</strong>. A Conectiva (hoje NETCARE) passou a atuar de forma exclusiva na expansão da rede por mais de 10 anos. Entregamos obras completas <em>"turn-key"</em> via <strong>BNDES</strong> e realizamos trabalhos em áreas de altíssima exigência, como o Parque Nacional do Iguaçu (Cataratas) e a Itaipu.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2 lg:pl-20 pl-12 lg:pl-0 w-full">
+                        <div class="overflow-hidden rounded-xl shadow-lg border border-gray-100">
+                            <img src="https://files.catbox.moe/04efxw.jpeg" alt="Estruturas e Viadutos" class="w-full h-72 object-cover clickable-img hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4 border-l-2 border-netcare-yellow pl-3">Passagem de infraestrutura em rodovias (VIAPAR).</p>
+                    </div>
+                </div>
+
+                <!-- Hoje -->
+                <div class="relative flex flex-col lg:flex-row-reverse items-center fade-up">
+                    <div class="hidden lg:block absolute left-1/2 -translate-x-1/2 w-6 h-6 bg-netcare-purple rounded-full border-4 border-netcare-yellow z-10"></div>
+                    <div class="lg:hidden absolute left-[20px] -translate-x-1/2 w-4 h-4 bg-netcare-yellow border-2 border-netcare-purple rounded-full z-10 mt-2"></div>
+
+                    <div class="lg:w-1/2 lg:pl-20 text-left pl-12 lg:pl-0 mb-8 lg:mb-0 w-full">
+                        <span class="text-netcare-yellow font-black text-5xl font-ubuntu drop-shadow-sm block mb-4">Hoje</span>
+                        <h3 class="text-3xl font-bold text-netcare-purple mb-4">A Fase NETCARE</h3>
+                        <p class="text-gray-600 leading-relaxed text-base sm:text-lg">
+                            Após mais de uma década de exclusividade, a NETCARE expande novamente sua atuação para atender provedores (ISPs), operadoras e o mercado corporativo. Levamos para o ecossistema local o padrão operacional aprendido em grandes projetos de operadoras, unindo excelência a um forte alinhamento de propósito.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2 lg:pr-20 pl-12 lg:pl-0 w-full">
+                        <div class="overflow-hidden rounded-xl shadow-lg border-4 border-netcare-purple">
+                            <img src="https://files.catbox.moe/ox8g97.jpeg" alt="Operação Atual" class="w-full h-80 object-cover clickable-img hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4 lg:text-right border-l-2 lg:border-l-0 lg:border-r-2 border-netcare-purple pl-3 lg:pr-3">Proteção e execução técnica nas operações modernas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- A Evolução da Frota (Antes e Depois) -->
+    <section id="frota" class="pdf-section bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-dark heading-underline heading-underline-center mb-8">A Evolução da Frota</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6 leading-relaxed">
+                    Nossa história é contada pelos equipamentos que nos trouxeram até aqui. O investimento contínuo em maquinário de ponta garante a execução de projetos da mais alta complexidade.
+                </p>
+            </div>
+
+            <!-- ANTES (Raízes no Campo) -->
+            <div class="mb-24 fade-up">
+                <div class="flex items-center space-x-4 mb-8">
+                    <span class="text-gray-400 font-bold uppercase tracking-widest text-sm border border-gray-300 px-4 py-1.5 rounded">As Raízes</span>
+                    <h3 class="text-3xl font-bold text-gray-800">O Início no Campo</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                        <div class="overflow-hidden rounded-xl mb-5 h-72 bg-black">
+                            <img src="https://files.catbox.moe/5rsu7n.jpeg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 clickable-img opacity-80 hover:opacity-100" alt="Caminhão Antigo 1">
+                        </div>
+                        <p class="text-gray-600 text-base font-medium px-2">Operações iniciais de implantação de postes com o primeiro caminhão de guindaste da frota Conectiva.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                        <div class="overflow-hidden rounded-xl mb-5 h-72 bg-black">
+                            <img src="https://files.catbox.moe/dmnyn2.jpeg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 clickable-img opacity-80 hover:opacity-100" alt="Caminhão Antigo 2">
+                        </div>
+                        <p class="text-gray-600 text-base font-medium px-2">A equipa técnica a superar desafios logísticos e de terreno nas difíceis estradas rurais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEPOIS (Frota Atual) -->
+            <div class="fade-up">
+                <div class="flex items-center space-x-4 mb-8">
+                    <span class="text-netcare-purple font-bold uppercase tracking-widest text-sm border border-netcare-purple px-4 py-1.5 rounded bg-netcare-purple/5">O Presente</span>
+                    <h3 class="text-3xl font-bold text-gray-800">Infraestrutura Pesada e Mobilidade</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Caminhão Munck Novo -->
+                    <div class="lg:col-span-5 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center flex flex-col justify-between">
+                        <div class="h-80 flex items-center justify-center mb-6">
+                            <img src="https://files.catbox.moe/s37kcu.webp" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img" alt="Caminhão Munck">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl text-netcare-purple">Caminhão Munck</h4>
+                            <p class="text-gray-500 text-sm mt-3 leading-relaxed">Força bruta para operações de içamento, instalação de postes e implantação de redes pesadas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Perfuratriz -->
+                    <div class="lg:col-span-7 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-netcare-yellow text-netcare-dark text-xs font-bold px-5 py-2.5 rounded-bl-xl">DESTAQUE TECNOLÓGICO: MND</div>
+                        <div class="h-80 flex items-center justify-center mb-6 mt-4">
+                            <img src="https://files.catbox.moe/oppge8.webp" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img" alt="Perfuratriz">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl text-netcare-purple">Perfuratriz Direcional D6x6</h4>
+                            <p class="text-gray-500 text-sm mt-3 leading-relaxed">Método Não Destrutivo (MND). Equipamento de alta precisão para expansão subterrânea sem abertura de valas, reduzindo drasticamente o impacto urbano.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Frota Leve e Ágil -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
+                        <div class="h-48 flex items-center justify-center mb-6">
+                            <img src="https://files.catbox.moe/jty6yz.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Sprinter">
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-base">Sprinter (Equipas Maiores)</h4>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
+                        <div class="h-48 flex items-center justify-center mb-6">
+                            <img src="https://files.catbox.moe/yf5wau.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Fiorino">
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-base">Fiorino (Oficina e Ferramentas)</h4>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
+                        <div class="h-48 flex items-center justify-center mb-6">
+                            <img src="https://files.catbox.moe/pbuy6h.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Veículo Leve">
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-base">Veículos Leves (Agilidade e Gestão)</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="data-center" class="pdf-section bg-netcare-dark text-white border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-yellow heading-underline heading-underline-center mb-8 !border-white">A Evolução do Data Center</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mt-6 leading-relaxed">
+                    Da infraestrutura base ao corredor confinado. Veja como a nossa Engenharia de Continuidade é construída passo a passo para garantir a intolerância a falhas.
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Fase 1: Infraestrutura Base -->
+                <div class="fade-up">
+                    <h3 class="text-2xl font-bold text-white mb-6 border-l-4 border-netcare-purple pl-4">Fase 1: A Base e o Cabeamento</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <!-- IMAGEM ALTERADA CONFORME SOLICITADO: Fase 1 Primeira Foto -->
+                            <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%283%29.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="WhatsApp Image 2026-06-11 at 08.16.34 (3)" loading="lazy">
+                            <p class="text-gray-400 text-sm">Os clássicos bastidores abertos de dois postes, abrigando equipamentos de rede e módulos de conexão que marcaram o início da nossa operação interna.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="https://files.catbox.moe/j2pn2r.jpeg" class="w-full h-64 object-cover object-top rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="Técnico na calha" loading="lazy">
+                            <p class="text-gray-400 text-sm">Engenharia de instalação: técnico atuando na passagem de fiação nas calhas metálicas superiores.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.36%2012.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="WhatsApp Image 2026-06-11 at 08.16.36 12" loading="lazy">
+                            <p class="text-gray-400 text-sm">Sala técnica vazia com rack de servidores (estrutura metálica) e calhas de distribuição prontas para instalação de equipamentos.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%282%29.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="WhatsApp Image 2026-06-11 at 08.16.37 (2)" loading="lazy">
+                            <p class="text-gray-400 text-sm">Técnico organizando cordões de fibra óptica em rack de distribuição Sercomtel com conectores profissionais verdes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 2: Ativação -->
+                <div class="fade-up">
+                    <h3 class="text-2xl font-bold text-white mb-6 border-l-4 border-netcare-purple pl-4">Fase 2: Conectividade e Organização</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <!-- IMAGEM ALTERADA PARA COMPLETAR A HISTÓRIA -->
+                            <img src="https://files.catbox.moe/djejr3.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="Caixas de emenda" loading="lazy">
+                            <p class="text-gray-400 text-sm">Caixas de emenda metálicas integradas diretamente na estrutura dos bastidores, evoluindo a organização do cabeamento óptico interno.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="https://files.catbox.moe/ycqnsa.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="Organização DIO" loading="lazy">
+                            <p class="text-gray-400 text-sm">Painéis de manobra e DIOs abrigando as finas fibras ópticas, protegidas e distribuídas perfeitamente pelas laterais do rack.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 3: Energia -->
+                <div class="fade-up">
+                    <h3 class="text-2xl font-bold text-white mb-6 border-l-4 border-netcare-purple pl-4">Fase 3: Energia Crítica e Segurança</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="https://files.catbox.moe/vl2bsv.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="Quadro Elétrico" loading="lazy">
+                            <p class="text-gray-400 text-sm">Distribuição Elétrica (QTA): barramentos de cobre blindados em acrílico transparente para suportar cargas elevadas com máxima segurança.</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                            <img src="https://files.catbox.moe/a5oldn.jpeg" class="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-transform duration-500 clickable-img" alt="Sistema SMH" loading="lazy">
+                            <p class="text-gray-400 text-sm">Supressão de Incêndio: cilindro de gás SMH e quadros de comando garantindo a integridade física da operação.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase 4: O Estado da Arte -->
+                <div class="fade-up">
+                    <h3 class="text-2xl font-bold text-netcare-yellow mb-6 border-l-4 border-white pl-4">O Estado da Arte: O Corredor Confinado</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div class="bg-white/10 p-6 rounded-xl border border-white/20 h-full flex flex-col justify-between">
+                            <div class="overflow-hidden rounded-lg mb-4">
+                                <img src="https://files.catbox.moe/mbs581.jpeg" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500 clickable-img" alt="Climatização Vertiv" loading="lazy">
+                            </div>
+                            <p class="text-gray-300 text-sm">Equipamento de refrigeração de precisão Vertiv ao lado de racks de alta densidade. O ambiente é 100% monitorado e climatizado.</p>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-xl border border-white/20 h-full flex flex-col justify-between">
+                            <div class="overflow-hidden rounded-lg mb-4">
+                                <img src="https://files.catbox.moe/xjf74t.jpeg" class="w-full h-72 object-cover hover:scale-105 transition-transform duration-500 clickable-img" alt="Corredor Frio" loading="lazy">
+                            </div>
+                            <p class="text-gray-300 text-sm">O corredor confinado (frio/quente). Fileiras contínuas de racks isolados por portas de vidro, representando o máximo nível de infraestrutura (The Core).</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Arquitetura de Capacidades -->
+    <section id="capacidades" class="pdf-section bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-dark heading-underline heading-underline-center mb-8">Arquitetura de Capacidades</h2>
+                <p class="text-xl text-gray-600 mt-6">Uma visão integrada do ecossistema de telecomunicações.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Inside Plant -->
+                <div class="border border-gray-200 p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 fade-up">
+                    <div class="w-16 h-16 bg-netcare-purple/10 text-netcare-purple rounded-xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Inside Plant & Energia</h3>
+                    <p class="text-gray-600 text-base mb-8 leading-relaxed">Projetos internos de altíssima criticidade. <strong>A Engenharia de Continuidade.</strong></p>
+                    <ul class="space-y-4 text-base text-gray-700 font-medium">
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Montagem de Shelters e Data Centers</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Racks de Alta Densidade</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> UPS Vertiv e No-breaks Industriais</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Painéis Elétricos (QTA) e SMH (Incêndio)</li>
+                    </ul>
+                </div>
+
+                <!-- Outside Plant -->
+                <div class="border border-gray-200 p-10 rounded-2xl shadow-xl transition-all duration-300 fade-up delay-100 bg-netcare-dark text-white transform md:-translate-y-4">
+                    <div class="w-16 h-16 bg-white/10 text-netcare-yellow rounded-xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-netcare-yellow">Outside Plant & Obras</h3>
+                    <p class="text-gray-300 text-base mb-8 leading-relaxed">Infraestrutura pesada e rotinas de rua. <strong>A Força Bruta do terreno.</strong></p>
+                    <ul class="space-y-4 text-base text-gray-200 font-medium">
+                        <li class="flex items-start"><span class="text-netcare-yellow mr-3 mt-1">✓</span> Lançamento Óptico e Redes OPGW</li>
+                        <li class="flex items-start"><span class="text-netcare-yellow mr-3 mt-1">✓</span> Implantação de Postes</li>
+                        <li class="flex items-start"><span class="text-netcare-yellow mr-3 mt-1">✓</span> Obras em Rodovias (Aéreas/Subterrâneas)</li>
+                        <li class="flex items-start"><span class="text-netcare-yellow mr-3 mt-1">✓</span> Perfuração Direcional MND</li>
+                    </ul>
+                </div>
+
+                <!-- Gestão e Edge -->
+                <div class="border border-gray-200 p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 fade-up delay-200">
+                    <div class="w-16 h-16 bg-netcare-purple/10 text-netcare-purple rounded-xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Core & The Edge</h3>
+                    <p class="text-gray-600 text-base mb-8 leading-relaxed">O elo final. <strong>Controle centralizado e entrega técnica na ponta.</strong></p>
+                    <ul class="space-y-4 text-base text-gray-700 font-medium">
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Monitoramento Proativo (NOC/CGR)</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Garantia de Uptime (99.98%)</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Atendimentos Críticos de Campo</li>
+                        <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Instalações (Residencial, Comercial, B2B)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultura e Propósito (NOVO LAYOUT) -->
+    <section id="cultura" class="pdf-section bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            
+            <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-16 border border-gray-100 fade-up">
+                
+                <div class="text-center max-w-4xl mx-auto mb-16">
+                    <h3 class="text-3xl sm:text-5xl font-black text-netcare-dark mb-6 font-ubuntu">O Alinhamento de Propósito</h3>
+                    <p class="text-gray-600 leading-relaxed text-lg mb-6">
+                        Hoje, vivemos um novo momento de expansão e, junto a ele, um profundo alinhamento. Nos últimos anos, assumimos uma <strong>cultura cristã de forma intencional</strong>, colocando Deus em primeiro lugar. 
+                    </p>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        Entendemos que o verdadeiro sucesso não se mede apenas em números, mas no impacto que geramos nas pessoas. Temos clareza de que fomos chamados para colocar a empresa nas mãos de Deus, servindo como instrumento de excelência, cuidado e expansão do Seu Reino.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    
+                    <!-- Diagrama de Venn (Esquerda) -->
+                    <div class="flex justify-center order-2 lg:order-1">
+                        <div class="venn-container transform scale-90 sm:scale-100">
+                            <div class="venn-circle venn-top">Técnica</div>
+                            <div class="venn-circle venn-left">Propósito</div>
+                            <div class="venn-circle venn-right">Pessoas</div>
+                            <div class="venn-center">Excelência</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Os 3 Pilares (Direita) -->
+                    <div class="space-y-6 order-1 lg:order-2">
+                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-purple">
+                            <span class="font-black text-gray-900 block text-xl mb-2">TÉCNICA</span>
+                            <span class="text-base text-gray-600">Integridade de ações e precisão na execução operacional em todos os ambientes.</span>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-yellow">
+                            <span class="font-black text-gray-900 block text-xl mb-2">PESSOAS</span>
+                            <span class="text-base text-gray-600">Cuidado genuíno, respeito e valorização constante da nossa equipa e dos nossos parceiros.</span>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-purple">
+                            <span class="font-black text-gray-900 block text-xl mb-2">EXCELÊNCIA</span>
+                            <span class="text-base text-gray-600">Padrão inabalável de qualidade, entregando resultados muito acima das expectativas.</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Evolução da Equipa (Fotos abaixo do Propósito) -->
+            <div class="fade-up mt-24">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl font-bold text-gray-900">A Força Humana em Evolução</h3>
+                    <p class="text-gray-500 mt-2">A Segurança do Trabalho como valor prático e real.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Imagem Principal (Treino em Sala) -->
+                    <div class="lg:col-span-8 relative group overflow-hidden rounded-2xl shadow-lg h-[400px]">
+                        <img src="https://files.catbox.moe/7q1r26.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Treinamento Sala">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 via-netcare-dark/50 to-transparent p-8 pointer-events-none">
+                            <h4 class="text-netcare-yellow text-xl font-bold mb-2">Capacitação Contínua</h4>
+                            <p class="text-gray-200 text-sm">Alinhamento técnico em sala e cuidado com as pessoas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Imagens Secundárias -->
+                    <div class="lg:col-span-4 flex flex-col gap-6 h-[400px]">
+                        <div class="relative group overflow-hidden rounded-2xl shadow-lg flex-1">
+                            <img src="https://files.catbox.moe/kiuhgl.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Treinamento Galpão">
+                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 to-transparent p-5 pointer-events-none">
+                                <p class="text-white text-sm font-bold">Logística e Prática</p>
+                            </div>
+                        </div>
+                        <div class="relative group overflow-hidden rounded-2xl shadow-lg flex-1">
+                            <img src="https://files.catbox.moe/lj8qrw.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Evolução em Campo">
+                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 to-transparent p-5 pointer-events-none">
+                                <p class="text-white text-sm font-bold">Supervisão Tática de Campo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Diferenciais e Ecossistemas -->
+    <section id="diferenciais" class="pdf-section bg-netcare-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-yellow heading-underline heading-underline-center mb-8 !border-white">A Matriz de Diferenciais</h2>
+                <p class="text-xl text-gray-400 mt-6">O Padrão de Confiança que construímos ao longo de quase duas décadas.</p>
+            </div>
+
+            <!-- Grelha de Diferenciais -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-32 fade-up">
+                
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-yellow transition-colors">
+                    <div class="text-netcare-yellow mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Quase 20 Anos</h4>
+                    <p class="text-base text-gray-400">Sobrevivência e evolução contínua no mercado.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-yellow transition-colors">
+                    <div class="text-netcare-yellow mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Origem Prática</h4>
+                    <p class="text-base text-gray-400">Liderança que conhece a realidade dura do campo.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-yellow transition-colors">
+                    <div class="text-netcare-yellow mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">DNA Grandes Players</h4>
+                    <p class="text-base text-gray-400">Padrão GVT, Brasil Telecom e UEM incorporado.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-yellow transition-colors">
+                    <div class="text-netcare-yellow mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Operação Turn-Key</h4>
+                    <p class="text-base text-gray-400">Capacidade estruturada total (incluindo obras BNDES).</p>
+                </div>
+                
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-purple_light transition-colors">
+                    <div class="text-netcare-purple_light mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Vivência em ISPs</h4>
+                    <p class="text-base text-gray-400">Mais de 10 anos a sustentar provedores de internet.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-purple_light transition-colors">
+                    <div class="text-netcare-purple_light mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Maturidade em Crise</h4>
+                    <p class="text-base text-gray-400">Acostumados ao atendimento massivo e emergencial ágil.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-purple_light transition-colors">
+                    <div class="text-netcare-purple_light mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Cultura de Segurança</h4>
+                    <p class="text-base text-gray-400">Índices impecáveis de protecção e disciplina.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-netcare-purple_light transition-colors">
+                    <div class="text-netcare-purple_light mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></div>
+                    <h4 class="font-bold text-xl text-white mb-3">Longo Prazo</h4>
+                    <p class="text-base text-gray-400">Compromisso definitivo com pessoas e resultados.</p>
+                </div>
+            </div>
+
+            <!-- Ecossistemas & Contato -->
+            <div id="contato" class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center fade-up bg-white text-netcare-dark p-8 md:p-14 rounded-3xl shadow-2xl">
+                
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-black font-ubuntu text-netcare-purple mb-8">O Parceiro Estratégico do Seu Crescimento.</h3>
+                    <p class="text-gray-600 mb-10 text-lg leading-relaxed">
+                        Operamos em múltiplos ecossistemas, adaptando a nossa engenharia táctica à realidade da sua operação:
+                    </p>
+                    <ul class="space-y-5 text-gray-800 font-medium text-lg">
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Provedores de Internet (ISPs)</li>
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Operadoras de Telecomunicações</li>
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Data Centers e Ambientes Críticos</li>
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Grandes Corporações e Indústrias</li>
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Projetos Públicos e Privados</li>
+                        <li class="flex items-center"><span class="w-3 h-3 rounded-full bg-netcare-yellow mr-4"></span> Condomínios e Instituições de Ensino</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-3 text-netcare-dark">Inicie uma conversa.</h3>
+                    <p class="text-gray-500 text-base mb-8">Preencha o formulário e a nossa equipa entrará em contacto prontamente.</p>
+                    
+                    <form class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nome Completo</label>
+                            <input type="text" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="Insira o seu nome">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">E-mail Corporativo</label>
+                            <input type="email" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="marketing@netcare.net.br">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Sua Mensagem</label>
+                            <textarea rows="4" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 resize-none transition-all" placeholder="Qual o desafio da sua operação?"></textarea>
+                        </div>
+                        <button type="button" class="w-full bg-netcare-purple text-white font-bold text-lg py-4 rounded-lg hover:bg-netcare-dark transition-colors mt-4">
+                            ENVIAR MENSAGEM
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Corporativo -->
+    <footer class="bg-[#111111] text-gray-400 py-12 w-full border-t-[4px] border-netcare-purple">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row justify-between items-center text-sm space-y-6 md:space-y-0">
+            <div class="flex flex-col md:flex-row items-center md:space-x-6">
+                <img src="https://files.catbox.moe/wiudbm.png" class="h-7 brightness-0 invert opacity-60 mb-4 md:mb-0" alt="Logo Netcare">
+                <span class="hidden md:inline text-gray-600">|</span>
+                <span class="hover:text-white transition-colors cursor-pointer">marketing@netcare.net.br</span>
+                <span class="hidden md:inline text-gray-600">|</span>
+                <span class="hover:text-white transition-colors cursor-pointer">+55 44 3200-2548</span>
+                <span class="hidden md:inline text-gray-600">|</span>
+                <span>Maringá - PR</span>
+            </div>
+            <div class="font-medium text-gray-500 text-base">
+                &copy; <span id="year"></span> NETCARE. <span class="text-white hover:text-netcare-yellow transition-colors cursor-pointer ml-1">www.netcare.com.br</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button id="lightbox-close">&times;</button>
+        <img id="lightbox-img" src="" alt="Imagem Ampliada">
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Header Style (Shadow on Scroll)
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        
+        if (btn && menu) {
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+        }
+
+        // Smooth Scroll Offset Fix
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({
+                        top: target.getBoundingClientRect().top + window.scrollY - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer para Animação de Aparecimento (Fade-Up)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Lightbox Functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        
+        document.querySelectorAll('img.clickable-img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                // Impede o clique na imagem de fundo se estiver atrás do texto
+                if(e.target.classList.contains('hero-bg')) return;
+                
+                lightboxImg.src = e.target.src;
+                lightbox.classList.add('active');
+            });
+        });
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Fechar lightbox ao pressionar "ESC"
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

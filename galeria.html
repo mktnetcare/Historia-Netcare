@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETCARE - Galeria de Fotos e Vídeo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://files.catbox.moe">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Ubuntu:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        netcare: {
+                            purple: '#390ea6',
+                            purple_light: '#5c22d3',
+                            yellow: '#e5f034',
+                            light: '#f8f9fa',
+                            dark: '#111111',
+                            gray: '#4a4a4a'
+                        }
+                    },
+                    fontFamily: {
+                        ubuntu: ['Ubuntu', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-padding-top: 80px;
+        }
+        h1, h2, h3, h4, h5, h6, .font-ubuntu {
+            font-family: 'Ubuntu', sans-serif;
+        }
+        .submenu-nav .submenu-group {
+            position: relative;
+        }
+        .submenu-nav .submenu-group::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            height: 15px;
+            pointer-events: auto;
+            z-index: 19;
+        }
+        .submenu-nav .submenu-group > div {
+            position: absolute;
+            left: 0;
+            top: calc(100% + 0.75rem);
+            width: 14rem;
+            border-radius: 1.5rem;
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .submenu-nav .submenu-group:hover > div {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .submenu-nav .submenu-group > div:hover {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .submenu-nav .submenu-group > div a {
+            pointer-events: auto;
+        }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .heading-underline {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.75rem;
+        }
+        .heading-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            width: 80px;
+            background-color: #e5f034;
+            border-radius: 2px;
+        }
+        .heading-underline-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pdf-section {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+        @media (min-width: 1024px) {
+            .pdf-section {
+                padding-top: 10rem;
+                padding-bottom: 10rem;
+            }
+        }
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        #lightbox.active img {
+            transform: scale(1);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .clickable-img {
+            cursor: zoom-in;
+        }
+        .image-wrapper {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+        .image-wrapper > div {
+            width: 100%;
+            height: 100%;
+        }
+        .image-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7), transparent);
+            color: #e5f034;
+            padding: 12px 10px 8px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: normal;
+            text-align: left;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            line-height: 1.3;
+            max-height: 45%;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+        }
+        @media (min-width: 768px) {
+            .image-description {
+                font-size: 12px;
+                padding: 14px 12px 10px 12px;
+                line-height: 1.35;
+            }
+        }
+        @media (min-width: 1024px) {
+            .image-description {
+                font-size: 12px;
+                padding: 16px 14px 12px 14px;
+                line-height: 1.4;
+            }
+        }
+        .image-wrapper:hover .image-description {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="https://files.catbox.moe/wiudbm.png" alt="Netcare Logo" class="h-8 object-contain" fetchpriority="high">
+            </a>
+            <nav class="hidden lg:flex items-center space-x-8 submenu-nav">
+                <div class="relative group submenu-group">
+                    <a href="index.html" class="text-sm font-semibold text-gray-700 hover:text-netcare-purple transition-colors">Página inicial</a>
+                    <div class="absolute left-0 z-20 mt-3 w-56 rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                        <div class="p-4 space-y-2">
+                            <a href="index.html#data-center" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">Data Center</a>
+                            <a href="index.html#capacidades" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">Capacidades</a>
+                            <a href="index.html#cultura" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">Cultura</a>
+                            <a href="index.html#diferenciais" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">Diferenciais</a>
+                            <a href="index.html#contato" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">Fale Conosco</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group submenu-group">
+                    <a href="index.html#historia" class="text-sm font-semibold text-gray-700 hover:text-netcare-purple transition-colors">Nossa História</a>
+                    <div class="absolute left-0 z-20 mt-3 w-56 rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                        <div class="p-4 space-y-2">
+                            <a href="index.html#frota" class="block text-sm text-gray-700 hover:text-netcare-purple transition-colors cursor-pointer">A Frota</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="galeria.html" class="text-sm font-semibold text-netcare-purple">Galeria</a>
+            </nav>
+            <a href="index.html" class="hidden md:flex bg-netcare-purple text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-netcare-dark transition-colors shadow-sm">Voltar</a>
+            <div class="lg:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-netcare-dark focus:outline-none p-2">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl max-h-[80vh] overflow-y-auto">
+            <div class="px-6 py-6 space-y-6">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Página inicial</p>
+                    <a href="index.html" class="block text-base font-semibold text-gray-800 mb-3">Tela Inicial</a>
+                    <a href="index.html#data-center" class="block text-base font-semibold text-gray-800 mb-3">Data Center</a>
+                    <a href="index.html#capacidades" class="block text-base font-semibold text-gray-800 mb-3">Capacidades</a>
+                    <a href="index.html#cultura" class="block text-base font-semibold text-gray-800 mb-3">Cultura</a>
+                    <a href="index.html#diferenciais" class="block text-base font-semibold text-gray-800 mb-3">Diferenciais</a>
+                    <a href="index.html#contato" class="block text-base font-semibold text-gray-800">Fale Conosco</a>
+                </div>
+                <div class="pt-6 border-t border-gray-100">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Nossa História</p>
+                    <a href="index.html#historia" class="block text-base font-semibold text-gray-800 mb-3">Nossa História</a>
+                    <a href="index.html#frota" class="block text-base font-semibold text-gray-800">A Frota</a>
+                </div>
+                <div class="pt-6 border-t border-gray-100">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-3">Galeria</p>
+                    <a href="galeria.html" class="block text-base font-semibold text-gray-800">Galeria</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-netcare-dark overflow-hidden min-h-[70vh] flex items-center">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.17.jpeg" class="w-full h-full object-cover object-center opacity-40 grayscale" alt="Galeria de Netcare" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-r from-netcare-dark via-netcare-dark/90 to-netcare-dark/50 pointer-events-none"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full fade-up">
+            <div class="max-w-3xl">
+                <div class="flex items-center space-x-3 mb-8">
+                    <span class="h-[1px] w-8 bg-netcare-yellow"></span>
+                    <span class="text-netcare-yellow text-xs font-bold tracking-[0.2em] uppercase">Galeria de Operação</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight font-ubuntu mb-8">Fotos e vídeo do projeto</h1>
+                <p class="text-lg sm:text-xl text-gray-300 font-light leading-relaxed border-l-2 border-white/20 pl-6">
+                    Todas as imagens da pasta reunidas em uma página dedicada, com visualização em tela cheia e suporte para assistir ao vídeo de campo diretamente aqui.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pdf-section bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 mb-14 fade-up">
+                <div class="rounded-3xl overflow-hidden shadow-2xl bg-black">
+                    <video controls preload="metadata" class="w-full h-full object-cover bg-black" poster="WhatsApp%20Image%202026-06-11%20at%2008.14.17.jpeg">
+                        <source src="WhatsApp%20Video%202026-06-11%20at%2008.14.18.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeo HTML5.
+                    </video>
+                </div>
+                <div class="bg-gray-50 p-10 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <span class="text-sm font-semibold uppercase tracking-[0.3em] text-netcare-purple">Vídeo de Operação</span>
+                        <h2 class="mt-6 text-3xl font-black text-gray-900">Sessão Completa de Mídia</h2>
+                        <p class="mt-5 text-base text-gray-600 leading-relaxed">
+                            Abaixo estão todas as imagens locais da pasta, reunidas em um único ponto de acesso. Clique nelas para ampliar e veja o vídeo de operação no conteúdo principal.
+                        </p>
+                    </div>
+                    <div class="mt-8 text-sm text-gray-500">
+                        Se quiser, use o botão Voltar para retornar ao dossiê corporativo principal.
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 fade-up">
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.17.jpeg" alt="Data Center Netcare" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Infraestrutura robusta: equipamento Vertiv de refrigeração, racks de servidores e sistema de combate a incêndio</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.18%20%281%29.jpeg" alt="Distribuição Elétrica Netcare" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Segurança elétrica: quadro de distribuição com barramentos de cobre protegidos contra choque elétrico</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.18%20%282%29.jpeg" alt="Sistema Contra Incêndio" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Proteção contra incêndio: cilindro SMH de supressão integrado com sistema automatizado</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.18%20%283%29.jpeg" alt="Treinamento em Galpão" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Qualificação profissional: equipe em capacitação com estoque organizado de equipamentos técnicos</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.18.jpeg" alt="Treinamento com Coffee Break" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Desenvolvimento de talentos: apresentação técnica com instrutor e apoio de refresh para equipe</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.19%20%281%29.jpeg" alt="Corredor Frio Data Center" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Data center moderno: fileiras de servidores com isolamento térmico e iluminação LED de precisão</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.14.19.jpeg" alt="Rack de Telecomunicações" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Tecnologia de ponta: rack com distribuidores ópticos, fibra óptica Corning e painéis de manobra</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.32%20%281%29.jpeg" alt="Infraestrutura em Viaduto" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Expansão de conectividade: dutos e tubulações integrados à infraestrutura viária (VIAPAR)</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.32%202.jpeg" alt="Emenda de Fibra Óptica" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Precisão técnica: detalhes de emenda de fibra óptica com fusão de alta performance</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.32.jpeg" alt="Instalação de Postes Conectiva" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Operação de campo: equipe Conectiva instalando infraestrutura de fibra com guindaste em área rural</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.33%20%281%29.jpeg" alt="Manutenção em Viaduto VIAPAR" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Expertise em campo: técnicos em cesto aéreo realizando manutenção de infraestrutura viária</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.33%20%282%29.jpeg" alt="Perfuração Direcional FIBERCOM" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Inovação em instalação: máquina Vermeer de perfuração direcional para valas subterrâneas</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.33.jpeg" alt="Andaime em Viaduto" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Operação coordenada: torre de andaime com guindaste amarelo em manutenção estrutural</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%281%29.jpeg" alt="Instalação em Área Rural" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Alcance geográfico: equipe Conectiva expandindo infraestrutura de comunicação para interior</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%282%29.jpeg" alt="Rodovia e Infraestrutura" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Integração infraestrutural: cabos e dutos alinhados em estrutura viária VIAPAR</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%283%29.jpeg" alt="Sala Técnica Completa" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Centro de operações: racks profissionais com módulos Ryad e infraestrutura cabeada organizada</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%284%29.jpeg" alt="Detalhe Racks Telecomunicações" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Precisão em detalhes: caixas de emenda metálicas em racks profissionais de telecomunicações</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34%20%285%29.jpeg" alt="Racks Robustos" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Estrutura robusta: racks de telecomunicações profissionais com painéis e cabeamento organizado</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.34.jpeg" alt="Bastidores Equipados" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Operação em escala: bastidores abertos com equipamentos de rede e calhas de cabeamento suspensas</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.35%20%281%29.jpeg" alt="Manutenção em Viaduto com Andaime" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Segurança em primeiro lugar: andaime com rede azul de proteção para trabalhos em altura</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.35%20%282%29.jpeg" alt="Escalada em Andaime" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Trabalho em altura: colaboradores com equipamento de proteção em operação coordenada</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.35%20%283%29.jpeg" alt="Sinalização VIAPAR" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Marco de operação: placa VIAPAR indicando conclusão de trecho com infraestrutura instalada</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.35%20%284%29.jpeg" alt="Cesto Aéreo em Operação" class="w-full h-all object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Precisão em altura: cesto aéreo com profissional fixando tubulação de PVC em estrutura</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.35.jpeg" alt="Oficina Móvel de Fibra" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Flexibilidade operacional: van adaptada como oficina móvel para emendas de fibra óptica em campo</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.36%20%281%29.jpeg" alt="Caminhão com Guindaste" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Frota moderna: caminhão com guindaste munck articulado para operações de carga pesada</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.36%201.jpeg" alt="Guindaste RODOMAQ" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Equipamento de qualidade: guindaste RODOMAQ marca em frota moderna de logística</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.36%2012.jpeg" alt="Sala Técnica Vazia" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Espaço preparado: sala técnica com calhas de distribuição e infraestrutura para equipamentos</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.36.jpeg" alt="Instalação Rural" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Cobertura regional: equipe Conectiva levando infraestrutura para áreas rurais e remotas</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%281%29.jpeg" alt="Interior Rack Telecom" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Equipamentos profissionais: rack com módulos Revali e Datacom com conectores de fibra óptica</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%282%29.jpeg" alt="Técnico em Distribuição Óptica" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Expertise técnica: especialista Conectiva em distribuição óptica com conectores verdes Sercomtel</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%283%29.jpeg" alt="Perfuração FIBERCOM" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Parceria estratégica: frota FIBERCOM com Vermeer para infraestrutura de fibra em meio urbano</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%284%29.jpeg" alt="Manutenção em Altura" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Habilidade técnica: especialista subindo para manutenção de cabeamento em altura com escada TELEPAR</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37%20%285%29.jpeg" alt="Instalação Ford Conectiva" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Operação de campo: equipe Conectiva com guindaste Ford em instalação rural</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.37.jpeg" alt="Identidade FIBERCOM" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Marca corporativa: identidade FIBERCOM com slogan "Internet de Ultravelocidade" em operação</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38%20%281%29.jpeg" alt="Treinamento Fiberschool" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Capacitação continuada: treinamento Fiberschool com equipe técnica em galpão de estoque</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38%20%282%29.jpeg" alt="Guindaste em Altura" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Operação sincronizada: guindaste elevando gaiola com técnicos para manutenção viária VIAPAR</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38%20%283%29.jpeg" alt="Guindaste RODOMAQ GHR" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Equipamento de ponta: guindaste RODOMAQ modelo GHR-12.000 em operação de manutenção estrutural</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38%20%284%29.jpeg" alt="Andaime e Proteção" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Segurança integrada: andaime com rede azul e guindaste Volkswagen em operação coordenada VIAPAR</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38%20%285%29.jpeg" alt="Racks Operacionais Finais" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Centro de dados em operação: racks profissionais com módulos Ryad e infraestrutura cabeada completa</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.38.jpeg" alt="Sala Técnica Final" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Infraestrutura consolidada: bastidores profissionais com equipamentos de rede e cabeamento de dados integrado</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.39%20%281%29.jpeg" alt="Operações Netcare 1" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Trajetória Netcare: décadas de expertise em telecomunicações, infraestrutura e inovação</div>
+                </div>
+                <div class="image-wrapper">
+                    <div class="overflow-hidden rounded-3xl shadow-xl">
+                        <img src="WhatsApp%20Image%202026-06-11%20at%2008.16.39.jpeg" alt="Operações Netcare 2" class="w-full h-full object-cover clickable-img" loading="lazy">
+                    </div>
+                    <div class="image-description">Legado corporativo: história de sucesso em telecomunicações, pessoas capacitadas e projetos realizados</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gradient-to-br from-netcare-dark to-netcare-dark/95 py-20 lg:py-32 border-t border-netcare-yellow/20">
+        <div class="max-w-2xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-14 fade-up">
+                <span class="text-netcare-yellow text-xs font-bold tracking-[0.2em] uppercase">Entre em Contato</span>
+                <h2 class="text-4xl sm:text-5xl font-black text-white leading-tight font-ubuntu mt-4 mb-6">Tire suas dúvidas</h2>
+                <p class="text-lg text-gray-300 font-light">Envie sua mensagem e nossa equipe responderá em breve</p>
+            </div>
+            
+            <form action="https://formsubmit.co/marketing@netcare.net.br" method="POST" class="bg-white/5 backdrop-blur-md p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl fade-up space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-white mb-3">Seu Nome</label>
+                    <input type="text" name="name" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-netcare-yellow focus:bg-white/15 transition-all" placeholder="João Silva">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-white mb-3">Email</label>
+                    <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-netcare-yellow focus:bg-white/15 transition-all" placeholder="seu@email.com">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-white mb-3">Telefone (opcional)</label>
+                    <input type="tel" name="phone" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-netcare-yellow focus:bg-white/15 transition-all" placeholder="+55 (44) 3200-2548">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-white mb-3">Assunto</label>
+                    <input type="text" name="subject" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-netcare-yellow focus:bg-white/15 transition-all" placeholder="Qual é sua dúvida?">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-white mb-3">Mensagem</label>
+                    <textarea name="message" required rows="5" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-netcare-yellow focus:bg-white/15 transition-all resize-none" placeholder="Conte mais sobre sua dúvida..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-netcare-purple hover:bg-netcare-purple_light text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl text-base">
+                    Enviar Mensagem
+                </button>
+                
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://file:///home/marketing/Downloads/historia%20netcare/galeria.html?enviado=true">
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-[#111111] text-gray-400 py-12 w-full border-t-[4px] border-netcare-purple">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row justify-between items-center text-sm space-y-6 md:space-y-0">
+            <div class="flex flex-col md:flex-row items-center md:space-x-6">
+                <span class="hover:text-white transition-colors cursor-pointer">marketing@netcare.net.br</span>
+                <span class="hidden md:inline text-gray-600">|</span>
+                <span class="hover:text-white transition-colors cursor-pointer">+55 44 3200-2548</span>
+                <span class="hidden md:inline text-gray-600">|</span>
+                <span>Maringá - PR</span>
+            </div>
+            <div class="font-medium text-gray-500 text-base">&copy; <span id="year"></span> NETCARE. <span class="text-white hover:text-netcare-yellow transition-colors cursor-pointer ml-1">www.netcare.com.br</span></div>
+        </div>
+    </footer>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <button id="lightbox-close">&times;</button>
+        <img id="lightbox-img" src="" alt="Imagem Ampliada">
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (btn && menu) {
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+        }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+                }
+            });
+        });
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        document.querySelectorAll('img.clickable-img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                lightboxImg.src = e.target.src;
+                lightbox.classList.add('active');
+            });
+        });
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
