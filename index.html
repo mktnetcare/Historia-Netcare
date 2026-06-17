@@ -532,7 +532,7 @@
                         <p class="text-gray-500 mt-3">Vídeo mostrando um dia de um técnico da Netcare em campo.</p>
                     </div>
                     <div class="w-full overflow-hidden rounded-3xl bg-white flex-1 flex items-center justify-center" style="aspect-ratio: 9 / 16; max-height: min(70vh, 520px);">
-                        <iframe class="w-full h-full rounded-3xl" src="https://www.youtube.com/embed/6XhSk0lW8Ho" title="Vídeo dia de instalação v1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        <iframe class="w-full h-full rounded-3xl" src="https://www.youtube.com/embed/RMDnz5EN90E" title="Vídeo dia de instalação v1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                     </div>
                 </div>
 
@@ -1106,17 +1106,23 @@
         function openVideoModal(videoFile, type = 'video') {
             const modal = document.createElement('div');
             modal.id = 'video-modal';
-            modal.className = 'fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4';
+            modal.className = 'fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-2 sm:p-4';
+            const modalFrameClass = type === 'youtube'
+                ? 'relative mx-auto'
+                : 'relative w-full max-w-[420px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[720px] max-h-[90vh] mx-auto';
+            const modalFrameStyle = type === 'youtube'
+                ? 'style="width: min(56.25vh, calc(100vw - 1rem), 551px); aspect-ratio: 9 / 16;"'
+                : '';
             const videoContent = type === 'youtube'
-                ? `<iframe class="w-full h-full rounded-3xl" src="${videoFile}" title="Vídeo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="max-height: calc(100vh - 4rem);"></iframe>`
+                ? `<iframe class="w-full h-full rounded-3xl" src="${videoFile}" title="Vídeo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
                 : `<video controls autoplay class="w-full h-full object-contain" style="max-height: calc(100vh - 4rem);">
                         <source src="${videoFile}" type="video/mp4">
                         Seu navegador não suporta a tag de vídeo.
                     </video>`;
             modal.innerHTML = `
-                <div class="relative w-full max-w-[420px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[720px] max-h-[90vh] mx-auto">
-                    <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-50 text-white hover:text-netcare-yellow transition-colors">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="${modalFrameClass}" ${modalFrameStyle}>
+                    <button onclick="closeVideoModal()" class="absolute top-3 right-3 z-50 rounded-full bg-black/50 p-1 text-white hover:text-netcare-yellow transition-colors">
+                        <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
@@ -1153,9 +1159,11 @@
 
         function openTruckGallery() {
             const items = [
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.18.mp4' },
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.21.mp4' },
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.36.mp4' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/vr3GLtns-3A', youtubeId: 'vr3GLtns-3A' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/vr3GLtns-3A', youtubeId: 'vr3GLtns-3A' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/IPU7kda-8EA', youtubeId: 'IPU7kda-8EA' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/wP6cNrYOGxQ', youtubeId: 'wP6cNrYOGxQ' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/4R3TywN7VHg', youtubeId: '4R3TywN7VHg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00.jpeg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%281%29.jpeg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%283%29.jpeg' },
@@ -1165,13 +1173,15 @@
             const galleryCards = items.map(item => {
                 const thumb = item.type === 'video'
                     ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><video src="${item.src}" muted preload="metadata" class="w-full h-full object-cover"></video><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
+                    : item.type === 'youtube'
+                        ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><img src="https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg" alt="${item.title}" class="w-full h-full object-cover"><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
                     : `<img src="${item.src}" alt="${item.title}" class="w-full h-44 object-cover rounded-3xl">`;
                 return `
                     <button type="button" onclick="openTruckGalleryItem('${item.type}','${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
                         ${thumb}
                         <div class="p-4">
                             <p class="font-semibold text-sm text-gray-900">${item.title}</p>
-                            <p class="mt-2 text-xs text-gray-500">${item.type === 'video' ? 'Vídeo' : 'Imagem'}</p>
+                            <p class="mt-2 text-xs text-gray-500">${item.type === 'video' || item.type === 'youtube' ? 'Vídeo' : 'Imagem'}</p>
                         </div>
                     </button>
                 `;
@@ -1207,8 +1217,8 @@
         }
 
         function openTruckGalleryItem(type, src) {
-            if (type === 'video') {
-                openVideoModal(src);
+            if (type === 'video' || type === 'youtube') {
+                openVideoModal(src, type);
                 return;
             }
             openLightboxWithSrc(src);
@@ -1216,10 +1226,12 @@
 
         function openInstallationsGallery() {
             const items = [
-                { type: 'youtube', title: 'Dia de instalação v1', src: 'https://www.youtube.com/embed/6XhSk0lW8Ho' },
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2010.36.11.mp4' },
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2011.12.06.mp4' },
-                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2011.20.48.mp4' },
+                { type: 'youtube', title: 'Dia de instalação v1', src: 'https://www.youtube.com/embed/RMDnz5EN90E' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/vr3GLtns-3A', youtubeId: 'vr3GLtns-3A' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/vr3GLtns-3A', youtubeId: 'vr3GLtns-3A' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/IPU7kda-8EA', youtubeId: 'IPU7kda-8EA' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/wP6cNrYOGxQ', youtubeId: 'wP6cNrYOGxQ' },
+                { type: 'youtube', title: 'Técnicos trabalhando usando o caminhão', src: 'https://www.youtube.com/embed/4R3TywN7VHg', youtubeId: '4R3TywN7VHg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00.jpeg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%281%29.jpeg' },
                 { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%283%29.jpeg' },
@@ -1244,7 +1256,7 @@
                 const thumb = item.type === 'video'
                     ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><video src="${item.src}" muted preload="metadata" class="w-full h-full object-cover"></video><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
                     : item.type === 'youtube'
-                        ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><img src="https://img.youtube.com/vi/6XhSk0lW8Ho/hqdefault.jpg" alt="${item.title}" class="w-full h-full object-cover"><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
+                        ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><img src="https://img.youtube.com/vi/${item.youtubeId || 'RMDnz5EN90E'}/hqdefault.jpg" alt="${item.title}" class="w-full h-full object-cover"><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
                         : `<img src="${item.src}" alt="${item.title}" class="w-full h-44 object-cover rounded-3xl">`;
                 return `
                     <button type="button" onclick="openInstallationsGalleryItem('${item.type}','${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
