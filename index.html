@@ -280,14 +280,14 @@
     </header>
 
     <!-- Hero Section (Capa Histórica) -->
-    <section id="capa" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-netcare-dark overflow-hidden min-h-[90vh] flex items-center">
+    <section id="capa" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-[90vh] flex items-center">
         <!-- Background com a História da Netcare (Equipa no campo) -->
         <div class="absolute inset-0 z-0 overflow-hidden">
-            <img src="https://files.catbox.moe/5rsu7n.jpeg" class="w-full h-full object-cover object-center hero-bg opacity-40 grayscale clickable-img" fetchpriority="high" alt="Equipa Netcare no Campo em 2006">
-            <!-- Gradiente Escuro para Leitura -->
-            <div class="absolute inset-0 bg-gradient-to-r from-netcare-dark via-netcare-dark/90 to-netcare-dark/50 pointer-events-none"></div>
-            <!-- Sobreposição Roxa Sutil -->
-            <div class="absolute inset-0 bg-netcare-purple/20 mix-blend-multiply pointer-events-none"></div>
+            <img src="https://files.catbox.moe/5rsu7n.jpeg" class="w-full h-full object-cover object-center hero-bg clickable-img" fetchpriority="high" alt="Equipa Netcare no Campo em 2006">
+            <!-- Sombra de 30% para manter a imagem visível -->
+            <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
+            <!-- Sobreposição Roxa Sutil reduzida -->
+            <div class="absolute inset-0 bg-netcare-purple/10 mix-blend-multiply pointer-events-none"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full fade-up pointer-events-none">
@@ -470,7 +470,7 @@
                     <!-- Caminhão Munck Novo -->
                     <div class="lg:col-span-5 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center flex flex-col justify-between">
                         <div class="h-80 flex items-center justify-center mb-6">
-                            <img src="https://files.catbox.moe/s37kcu.webp" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img" alt="Caminhão Munck">
+                            <img id="truck-gallery-trigger" src="Gemini_Generated_Image_1zhpmg1zhpmg1zhp.png" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img cursor-pointer" alt="Caminhão Munck">
                         </div>
                         <div>
                             <h4 class="font-bold text-xl text-netcare-purple">Caminhão Munck</h4>
@@ -498,19 +498,19 @@
                         <div class="h-48 flex items-center justify-center mb-6">
                             <img src="https://files.catbox.moe/jty6yz.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Sprinter">
                         </div>
-                        <h4 class="font-bold text-gray-800 text-base">Sprinter (Equipas Maiores)</h4>
+                        <h4 class="font-bold text-gray-800 text-base">Sprinter</h4>
                     </div>
                     <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
                         <div class="h-48 flex items-center justify-center mb-6">
                             <img src="https://files.catbox.moe/yf5wau.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Fiorino">
                         </div>
-                        <h4 class="font-bold text-gray-800 text-base">Fiorino (Oficina e Ferramentas)</h4>
+                        <h4 class="font-bold text-gray-800 text-base">Fiorino</h4>
                     </div>
                     <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
                         <div class="h-48 flex items-center justify-center mb-6">
                             <img src="https://files.catbox.moe/pbuy6h.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Veículo Leve">
                         </div>
-                        <h4 class="font-bold text-gray-800 text-base">Veículos Leves (Agilidade e Gestão)</h4>
+                        <h4 class="font-bold text-gray-800 text-base">Veículos</h4>
                     </div>
                 </div>
 
@@ -518,8 +518,39 @@
         </div>
     </section>
 
+    <section id="dia-trabalho" class="pdf-section bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-dark heading-underline heading-underline-center mb-8">Como é um dia de trabalho dos técnicos da Netcare</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6 leading-relaxed">A rotina em campo, das instalações às manutenções, com a equipa coordenando equipamentos e veículos em cada projeto.</p>
+            </div>
 
-    <section id="data-center" class="pdf-section bg-netcare-dark text-white border-t border-gray-800">
+            <div class="grid gap-8 lg:grid-cols-3">
+                <div class="lg:col-span-2 bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="p-6 pt-4">
+                        <h3 class="text-2xl font-bold text-gray-900">Um dia com um técnico da Netcare</h3>
+                        <p class="text-gray-500 mt-3">Vídeo mostrando um dia de um técnico da Netcare em campo.</p>
+                    </div>
+                    <div class="w-full overflow-hidden rounded-3xl bg-white flex-1 flex items-center justify-center" style="aspect-ratio: 9 / 16; max-height: min(70vh, 520px);">
+                        <video controls playsinline class="w-full h-full object-contain" src="instala%C3%A7%C3%A3o/Dia%20de%20instala%C3%A7%C3%A3o%20v1.mp4"></video>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 bg-white rounded-3xl border border-gray-200 shadow-sm p-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <img src="fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00.jpeg" class="w-full h-32 object-cover rounded-3xl clickable-img" alt="Técnicos trabalhando usando o caminhão">
+                        <img src="fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%281%29.jpeg" class="w-full h-32 object-cover rounded-3xl clickable-img" alt="Técnicos trabalhando usando o caminhão">
+                        <img src="fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%283%29.jpeg" class="w-full h-32 object-cover rounded-3xl clickable-img" alt="Técnicos trabalhando usando o caminhão">
+                        <img src="fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.28.30%20%282%29.jpeg" class="w-full h-32 object-cover rounded-3xl clickable-img" alt="Técnicos trabalhando usando o caminhão">
+                        <img src="fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.34.28%20%281%29.jpeg" class="w-full h-32 object-cover rounded-3xl clickable-img col-span-2">
+                    </div>
+                    <button type="button" onclick="openInstallationsGallery()" class="mt-6 w-full rounded-3xl bg-netcare-purple text-white py-3 font-semibold transition hover:bg-netcare-purple/90">Ver mais</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="data-center" class="pdf-section bg-[#230867] text-white border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="text-center mb-20 fade-up">
                 <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-yellow heading-underline heading-underline-center mb-8 !border-white">A Evolução do Data Center</h2>
@@ -607,6 +638,38 @@
         </div>
     </section>
 
+    <!-- Netcare é Energia -->
+    <section id="energia" class="pdf-section bg-gradient-to-br from-yellow-50 to-orange-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black font-ubuntu text-netcare-dark heading-underline heading-underline-center mb-8">Netcare também é energia</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6 leading-relaxed">Soluções inovadoras em energia solar para infraestrutura de telecomunicações sustentável e eficiente.</p>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-3">
+                <div class="lg:col-span-2 bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Projetos em Energia Solar</h3>
+                        <p class="text-gray-500 mt-3">Instalações de painéis solares para torres e estações de telecomunicações, garantindo autonomia energética.</p>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div id="solar-main-media" class="w-full h-96 flex items-center justify-center overflow-hidden rounded-md bg-black">
+                            <video id="solar-main-video" controls playsinline class="w-full h-full object-cover">
+                                <source src="energia%20solar/WhatsApp%20Video%202026-06-16%20at%2009.54.23.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 bg-white rounded-3xl border border-gray-200 shadow-sm p-4">
+                    <div id="solar-gallery" class="grid grid-cols-2 gap-3">
+                    </div>
+                    <button type="button" onclick="openSolarGallery()" class="mt-6 w-full rounded-3xl bg-yellow-500 text-white py-3 font-semibold transition hover:bg-yellow-600">Ver galeria</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Arquitetura de Capacidades -->
     <section id="capacidades" class="pdf-section bg-white border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
@@ -617,12 +680,12 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 
-                <!-- Inside Plant -->
+                <!-- Planta Interna -->
                 <div class="border border-gray-200 p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 fade-up">
                     <div class="w-16 h-16 bg-netcare-purple/10 text-netcare-purple rounded-xl flex items-center justify-center mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Inside Plant & Energia</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Planta Interna e Energia</h3>
                     <p class="text-gray-600 text-base mb-8 leading-relaxed">Projetos internos de altíssima criticidade. <strong>A Engenharia de Continuidade.</strong></p>
                     <ul class="space-y-4 text-base text-gray-700 font-medium">
                         <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Montagem de Shelters e Data Centers</li>
@@ -632,12 +695,12 @@
                     </ul>
                 </div>
 
-                <!-- Outside Plant -->
+                <!-- Planta Externa -->
                 <div class="border border-gray-200 p-10 rounded-2xl shadow-xl transition-all duration-300 fade-up delay-100 bg-netcare-dark text-white transform md:-translate-y-4">
                     <div class="w-16 h-16 bg-white/10 text-netcare-yellow rounded-xl flex items-center justify-center mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-netcare-yellow">Outside Plant & Obras</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-netcare-yellow">Planta Externa e Obras</h3>
                     <p class="text-gray-300 text-base mb-8 leading-relaxed">Infraestrutura pesada e rotinas de rua. <strong>A Força Bruta do terreno.</strong></p>
                     <ul class="space-y-4 text-base text-gray-200 font-medium">
                         <li class="flex items-start"><span class="text-netcare-yellow mr-3 mt-1">✓</span> Lançamento Óptico e Redes OPGW</li>
@@ -647,12 +710,12 @@
                     </ul>
                 </div>
 
-                <!-- Gestão e Edge -->
+                <!-- Gestão e Ponta Final -->
                 <div class="border border-gray-200 p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 fade-up delay-200">
                     <div class="w-16 h-16 bg-netcare-purple/10 text-netcare-purple rounded-xl flex items-center justify-center mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Core & The Edge</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Gestão e Ponta Final</h3>
                     <p class="text-gray-600 text-base mb-8 leading-relaxed">O elo final. <strong>Controle centralizado e entrega técnica na ponta.</strong></p>
                     <ul class="space-y-4 text-base text-gray-700 font-medium">
                         <li class="flex items-start"><span class="text-netcare-purple mr-3 mt-1">✓</span> Monitoramento Proativo (NOC/CGR)</li>
@@ -673,11 +736,15 @@
             <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-16 border border-gray-100 fade-up">
                 
                 <div class="text-center max-w-4xl mx-auto mb-16">
+                    <div class="flex justify-center mb-8">
+                        <span class="text-6xl">✦</span>
+                    </div>
                     <h3 class="text-3xl sm:text-5xl font-black text-netcare-dark mb-6 font-ubuntu">O Alinhamento de Propósito</h3>
+                    <div class="h-1 w-24 bg-gradient-to-r from-netcare-purple via-netcare-yellow to-netcare-purple mx-auto mb-8 rounded-full"></div>
                     <p class="text-gray-600 leading-relaxed text-lg mb-6">
                         Hoje, vivemos um novo momento de expansão e, junto a ele, um profundo alinhamento. Nos últimos anos, assumimos uma <strong>cultura cristã de forma intencional</strong>, colocando Deus em primeiro lugar. 
                     </p>
-                    <p class="text-gray-600 leading-relaxed text-lg">
+                    <p class="text-gray-700 leading-relaxed text-lg font-medium">
                         Entendemos que o verdadeiro sucesso não se mede apenas em números, mas no impacto que geramos nas pessoas. Temos clareza de que fomos chamados para colocar a empresa nas mãos de Deus, servindo como instrumento de excelência, cuidado e expansão do Seu Reino.
                     </p>
                 </div>
@@ -696,17 +763,20 @@
                     
                     <!-- Os 3 Pilares (Direita) -->
                     <div class="space-y-6 order-1 lg:order-2">
-                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-purple">
-                            <span class="font-black text-gray-900 block text-xl mb-2">TÉCNICA</span>
-                            <span class="text-base text-gray-600">Integridade de ações e precisão na execução operacional em todos os ambientes.</span>
+                        <div class="relative bg-gradient-to-br from-netcare-purple/5 to-netcare-purple/10 p-8 rounded-2xl border-l-4 border-netcare-purple shadow-lg hover:shadow-xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-netcare-purple/10 rounded-full"></div>
+                            <span class="font-black text-netcare-purple block text-2xl mb-3 tracking-wider">TÉCNICA</span>
+                            <span class="text-base text-gray-700 leading-relaxed">Integridade de ações e precisão na execução operacional em todos os ambientes. O padrão que não se negocia.</span>
                         </div>
-                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-yellow">
-                            <span class="font-black text-gray-900 block text-xl mb-2">PESSOAS</span>
-                            <span class="text-base text-gray-600">Cuidado genuíno, respeito e valorização constante da nossa equipa e dos nossos parceiros.</span>
+                        <div class="relative bg-gradient-to-br from-netcare-yellow/10 to-netcare-yellow/5 p-8 rounded-2xl border-l-4 border-netcare-yellow shadow-lg hover:shadow-xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-netcare-yellow/10 rounded-full"></div>
+                            <span class="font-black text-netcare-dark block text-2xl mb-3 tracking-wider">PESSOAS</span>
+                            <span class="text-base text-gray-700 leading-relaxed">Cuidado genuíno, respeito e valorização constante da nossa equipa e dos nossos parceiros. O coração que pulsa.</span>
                         </div>
-                        <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-netcare-purple">
-                            <span class="font-black text-gray-900 block text-xl mb-2">EXCELÊNCIA</span>
-                            <span class="text-base text-gray-600">Padrão inabalável de qualidade, entregando resultados muito acima das expectativas.</span>
+                        <div class="relative bg-gradient-to-br from-netcare-purple/5 to-netcare-purple/10 p-8 rounded-2xl border-l-4 border-netcare-purple shadow-lg hover:shadow-xl transition-all duration-300">
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-netcare-purple/10 rounded-full"></div>
+                            <span class="font-black text-netcare-purple block text-2xl mb-3 tracking-wider">EXCELÊNCIA</span>
+                            <span class="text-base text-gray-700 leading-relaxed">Padrão inabalável de qualidade, entregando resultados muito acima das expectativas. A marca que nos define.</span>
                         </div>
                     </div>
 
@@ -714,35 +784,71 @@
             </div>
 
             <!-- Evolução da Equipa (Fotos abaixo do Propósito) -->
-            <div class="fade-up mt-24">
-                <div class="text-center mb-10">
-                    <h3 class="text-2xl font-bold text-gray-900">A Força Humana em Evolução</h3>
-                    <p class="text-gray-500 mt-2">A Segurança do Trabalho como valor prático e real.</p>
+            <div class="fade-up mt-24 bg-[#230867] rounded-3xl p-8 lg:p-16">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl sm:text-4xl font-black text-netcare-yellow font-ubuntu mb-2">A Força Humana em Evolução</h3>
+                    <p class="text-gray-300 mt-2 text-lg">Segurança, capacitação contínua e excelência na prática diária.</p>
+                    <div class="h-1 w-20 bg-netcare-yellow mx-auto mt-6 rounded-full"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Imagem Principal (Treino em Sala) -->
-                    <div class="lg:col-span-8 relative group overflow-hidden rounded-2xl shadow-lg h-[400px]">
-                        <img src="https://files.catbox.moe/7q1r26.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Treinamento Sala">
-                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 via-netcare-dark/50 to-transparent p-8 pointer-events-none">
-                            <h4 class="text-netcare-yellow text-xl font-bold mb-2">Capacitação Contínua</h4>
-                            <p class="text-gray-200 text-sm">Alinhamento técnico em sala e cuidado com as pessoas.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[300px]">
+                    <!-- Imagem Grande - Destaque Capacitação (com video) -->
+                    <div class="lg:col-span-6 lg:row-span-2 relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="openVideoModal('WhatsApp%20Video%202026-06-11%20at%2008.14.18.mp4')">
+                        <img src="https://files.catbox.moe/7q1r26.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Capacitação em Sala">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center pointer-events-none">
+                            <svg class="w-16 h-16 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/95 via-netcare-dark/70 to-transparent p-8 pointer-events-none group-hover:from-netcare-dark/98 group-hover:via-netcare-dark/80 transition-colors duration-300">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-netcare-yellow"></span>
+                                <h4 class="text-netcare-yellow text-lg font-bold">Capacitação Contínua</h4>
+                            </div>
+                            <p class="text-gray-200 text-sm leading-relaxed group-hover:text-netcare-yellow transition-colors duration-300">Alinhamento técnico em sala e desenvolvimento de competências. Clique para assistir ao vídeo.</p>
                         </div>
                     </div>
 
-                    <!-- Imagens Secundárias -->
-                    <div class="lg:col-span-4 flex flex-col gap-6 h-[400px]">
-                        <div class="relative group overflow-hidden rounded-2xl shadow-lg flex-1">
-                            <img src="https://files.catbox.moe/kiuhgl.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Treinamento Galpão">
-                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 to-transparent p-5 pointer-events-none">
-                                <p class="text-white text-sm font-bold">Logística e Prática</p>
-                            </div>
+                    <!-- Imagens Secundárias com Hover Info -->
+                    <div class="lg:col-span-3 relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500">
+                        <img src="https://files.catbox.moe/kiuhgl.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Logística e Prática">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300"></div>
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/95 to-transparent p-4 pointer-events-none">
+                            <p class="text-white text-xs font-bold">Logística & Prática</p>
                         </div>
-                        <div class="relative group overflow-hidden rounded-2xl shadow-lg flex-1">
-                            <img src="https://files.catbox.moe/lj8qrw.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 clickable-img" alt="Evolução em Campo">
-                            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/90 to-transparent p-5 pointer-events-none">
-                                <p class="text-white text-sm font-bold">Supervisão Tática de Campo</p>
-                            </div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <p class="text-netcare-yellow text-center text-sm font-bold px-4">Operações em galpões e áreas logísticas com equipamento de ponta.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3 relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500">
+                        <img src="https://files.catbox.moe/lj8qrw.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Supervisão em Campo">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300"></div>
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/95 to-transparent p-4 pointer-events-none">
+                            <p class="text-white text-xs font-bold">Supervisão Tática</p>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <p class="text-netcare-yellow text-center text-sm font-bold px-4">Liderança técnica e supervisão de projetos em campo com precisão.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3 relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500">
+                        <img src="https://files.catbox.moe/41s4dn.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Treinamento de Segurança">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300"></div>
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/95 to-transparent p-4 pointer-events-none">
+                            <p class="text-white text-xs font-bold">Segurança no Trabalho</p>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <p class="text-netcare-yellow text-center text-sm font-bold px-4">Cultura de segurança como valor essencial em todas as operações.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3 relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500">
+                        <img src="https://files.catbox.moe/j2pn2r.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Engenharia Prática">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300"></div>
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-netcare-dark/95 to-transparent p-4 pointer-events-none">
+                            <p class="text-white text-xs font-bold">Engenharia de Precisão</p>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <p class="text-netcare-yellow text-center text-sm font-bold px-4">Instalação de infraestrutura com rigor técnico e atenção aos detalhes.</p>
                         </div>
                     </div>
                 </div>
@@ -828,20 +934,21 @@
                     <h3 class="text-2xl font-bold mb-3 text-netcare-dark">Inicie uma conversa.</h3>
                     <p class="text-gray-500 text-base mb-8">Preencha o formulário e a nossa equipa entrará em contacto prontamente.</p>
                     
-                    <form class="space-y-5">
+                    <form id="contact-form" class="space-y-5">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nome Completo</label>
-                            <input type="text" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="Insira o seu nome">
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2" for="contact-name">Nome Completo</label>
+                            <input id="contact-name" name="name" type="text" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="Insira o seu nome">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">E-mail Corporativo</label>
-                            <input type="email" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="marketing@netcare.net.br">
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2" for="contact-email">E-mail Corporativo</label>
+                            <input id="contact-email" name="email" type="email" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 transition-all" placeholder="marketing@netcare.net.br">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Sua Mensagem</label>
-                            <textarea rows="4" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 resize-none transition-all" placeholder="Qual o desafio da sua operação?"></textarea>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2" for="contact-message">Sua Mensagem</label>
+                            <textarea id="contact-message" name="message" rows="4" class="w-full px-5 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-netcare-purple focus:ring-1 focus:ring-netcare-purple text-gray-800 resize-none transition-all" placeholder="Qual o desafio da sua operação?"></textarea>
                         </div>
-                        <button type="button" class="w-full bg-netcare-purple text-white font-bold text-lg py-4 rounded-lg hover:bg-netcare-dark transition-colors mt-4">
+                        <div id="form-feedback" class="hidden rounded-xl border px-5 py-4 text-sm font-medium"></div>
+                        <button type="submit" class="w-full bg-netcare-purple text-white font-bold text-lg py-4 rounded-lg hover:bg-netcare-dark transition-colors mt-4">
                             ENVIAR MENSAGEM
                         </button>
                     </form>
@@ -926,6 +1033,48 @@
 
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+        // Formulário funcional
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        function showFormFeedback(message, type = 'success') {
+            if (!formFeedback) return;
+            formFeedback.textContent = message;
+            formFeedback.classList.remove('hidden', 'text-green-800', 'bg-green-100', 'border-green-200', 'text-red-700', 'bg-red-100', 'border-red-200');
+            formFeedback.classList.add('border', type === 'success' ? 'text-green-800' : 'text-red-700', type === 'success' ? 'bg-green-100' : 'bg-red-100', type === 'success' ? 'border-green-200' : 'border-red-200');
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const name = document.getElementById('contact-name').value.trim();
+                const email = document.getElementById('contact-email').value.trim();
+                const message = document.getElementById('contact-message').value.trim();
+
+                if (!name || !email || !message) {
+                    showFormFeedback('Por favor, preencha todos os campos antes de enviar.', 'error');
+                    return;
+                }
+
+                if (!validateEmail(email)) {
+                    showFormFeedback('Por favor, insira um e-mail válido.', 'error');
+                    return;
+                }
+
+                const subject = encodeURIComponent('Contato via site NETCARE');
+                const body = encodeURIComponent(`Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${message}`);
+                const mailtoLink = `mailto:marketing@netcare.net.br?subject=${subject}&body=${body}`;
+
+                showFormFeedback('A abrir o seu cliente de email. Complete o envio no seu aplicativo de email.', 'success');
+                window.location.href = mailtoLink;
+            });
+        }
+
         // Lightbox Functionality
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -933,16 +1082,325 @@
         document.querySelectorAll('img.clickable-img').forEach(img => {
             img.addEventListener('click', (e) => {
                 // Impede o clique na imagem de fundo se estiver atrás do texto
-                if(e.target.classList.contains('hero-bg')) return;
-                
+                if (e.target.classList.contains('hero-bg')) return;
+                if (e.target.id === 'truck-gallery-trigger') {
+                    openTruckGallery();
+                    return;
+                }
                 lightboxImg.src = e.target.src;
                 lightbox.classList.add('active');
             });
         });
         
+        let videoModalKeydownHandler = null;
+
         function closeLightbox() {
             lightbox.classList.remove('active');
         }
+
+        function openLightboxWithSrc(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function openVideoModal(videoFile) {
+            const modal = document.createElement('div');
+            modal.id = 'video-modal';
+            modal.className = 'fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="relative w-full max-w-[420px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[720px] max-h-[90vh] mx-auto">
+                    <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-50 text-white hover:text-netcare-yellow transition-colors">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <div class="h-full w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
+                        <video controls autoplay class="w-full h-full object-contain" style="max-height: calc(100vh - 4rem);">
+                            <source src="${videoFile}" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'video-modal') closeVideoModal();
+            });
+            videoModalKeydownHandler = (e) => {
+                if (e.key === 'Escape') closeVideoModal();
+            };
+            document.addEventListener('keydown', videoModalKeydownHandler);
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            if (modal) modal.remove();
+            if (videoModalKeydownHandler) {
+                document.removeEventListener('keydown', videoModalKeydownHandler);
+                videoModalKeydownHandler = null;
+            }
+        }
+
+        function handleGalleryKeydown(e) {
+            if (e.key !== 'Escape') return;
+            if (document.getElementById('video-modal') || lightbox.classList.contains('active')) return;
+            closeTruckGallery();
+            closeInstallationsGallery();
+        }
+
+        function openTruckGallery() {
+            const items = [
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.18.mp4' },
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.21.mp4' },
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2015.32.36.mp4' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%281%29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%283%29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.28.30%20%282%29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.34.28%20%281%29.jpeg' }
+            ];
+            const galleryCards = items.map(item => {
+                const thumb = item.type === 'video'
+                    ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><video src="${item.src}" muted preload="metadata" class="w-full h-full object-cover"></video><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
+                    : `<img src="${item.src}" alt="${item.title}" class="w-full h-44 object-cover rounded-3xl">`;
+                return `
+                    <button type="button" onclick="openTruckGalleryItem('${item.type}','${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
+                        ${thumb}
+                        <div class="p-4">
+                            <p class="font-semibold text-sm text-gray-900">${item.title}</p>
+                            <p class="mt-2 text-xs text-gray-500">${item.type === 'video' ? 'Vídeo' : 'Imagem'}</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            const modal = document.createElement('div');
+            modal.id = 'truck-gallery-modal';
+            modal.className = 'fixed inset-0 z-[99999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-black/10">
+                    <button type="button" onclick="closeTruckGallery()" class="absolute top-4 right-4 z-50 text-3xl font-bold text-gray-900 hover:text-netcare-purple">×</button>
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-2xl font-black text-gray-900">Caminhão Munck</h2>
+                        <p class="mt-2 text-sm text-gray-600">Clique no vídeo para assistir ou na imagem para ampliar.</p>
+                    </div>
+                    <div class="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
+                        ${galleryCards}
+                    </div>
+                </div>
+            `;
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'truck-gallery-modal') closeTruckGallery();
+            });
+            document.body.appendChild(modal);
+            document.removeEventListener('keydown', handleGalleryKeydown);
+            document.addEventListener('keydown', handleGalleryKeydown);
+        }
+
+        function closeTruckGallery() {
+            const modal = document.getElementById('truck-gallery-modal');
+            if (modal) modal.remove();
+            document.removeEventListener('keydown', handleGalleryKeydown);
+        }
+
+        function openTruckGalleryItem(type, src) {
+            if (type === 'video') {
+                openVideoModal(src);
+                return;
+            }
+            openLightboxWithSrc(src);
+        }
+
+        function openInstallationsGallery() {
+            const items = [
+                { type: 'video', title: 'Dia de instalação v1', src: 'instala%C3%A7%C3%A3o/Dia%20de%20instala%C3%A7%C3%A3o%20v1.mp4' },
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2010.36.11.mp4' },
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2011.12.06.mp4' },
+                { type: 'video', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/videos/WhatsApp%20Video%202026-06-16%20at%2011.20.48.mp4' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%281%29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.27.00%20%283%29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.41.29.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.41.30.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.41.31.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2010.41.32.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2011.09.24.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2011.10.58.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2011.14.27.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.14.26.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.14.27.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.14.42.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.28.30.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.33.45.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.34.27.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.34.28.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.36.38.jpeg' },
+                { type: 'image', title: 'Técnicos trabalhando usando o caminhão', src: 'fotos%20caminh%C3%A3o%20e%20instala%C3%A7%C3%A3o/WhatsApp%20Image%202026-06-16%20at%2015.36.39.jpeg' }
+            ];
+            const galleryCards = items.map(item => {
+                const thumb = item.type === 'video'
+                    ? `<div class="relative h-44 overflow-hidden rounded-3xl bg-black"><video src="${item.src}" muted preload="metadata" class="w-full h-full object-cover"></video><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>`
+                    : `<img src="${item.src}" alt="${item.title}" class="w-full h-44 object-cover rounded-3xl">`;
+                return `
+                    <button type="button" onclick="openInstallationsGalleryItem('${item.type}','${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
+                        ${thumb}
+                        <div class="p-4">
+                            <p class="font-semibold text-sm text-gray-900">${item.title}</p>
+                            <p class="mt-2 text-xs text-gray-500">${item.type === 'video' ? 'Vídeo' : 'Imagem'}</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            const modal = document.createElement('div');
+            modal.id = 'installation-gallery-modal';
+            modal.className = 'fixed inset-0 z-[99999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-black/10">
+                    <button type="button" onclick="closeInstallationsGallery()" class="absolute top-4 right-4 z-50 text-3xl font-bold text-gray-900 hover:text-netcare-purple">×</button>
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-2xl font-black text-gray-900">Trabalho dos Técnicos</h2>
+                        <p class="mt-2 text-sm text-gray-600">Vídeos e imagens das instalações e do trabalho em campo.</p>
+                    </div>
+                    <div class="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
+                        ${galleryCards}
+                    </div>
+                </div>
+            `;
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'installation-gallery-modal') closeInstallationsGallery();
+            });
+            document.body.appendChild(modal);
+            document.removeEventListener('keydown', handleGalleryKeydown);
+            document.addEventListener('keydown', handleGalleryKeydown);
+        }
+
+        function closeInstallationsGallery() {
+            const modal = document.getElementById('installation-gallery-modal');
+            if (modal) modal.remove();
+            document.removeEventListener('keydown', handleGalleryKeydown);
+        }
+
+        function openInstallationsGalleryItem(type, src) {
+            if (type === 'video') {
+                openVideoModal(src);
+                return;
+            }
+            openLightboxWithSrc(src);
+        }
+
+        // Solar Gallery Functions
+        function initSolarGallery() {
+            const solarItems = [
+                { type: 'video', src: 'energia%20solar/WhatsApp%20Video%202026-06-16%20at%2009.54.23.mp4' },
+                { type: 'image', src: 'energia%20solar/antes.jpeg' }
+            ];
+            const galleryContainer = document.getElementById('solar-gallery');
+            if (!galleryContainer) return;
+
+            const galleryCards = solarItems.map((item, idx) => {
+                if (item.type === 'video') {
+                    return `
+                        <button type="button" data-src="${item.src}" data-type="video" class="overflow-hidden rounded-3xl">
+                            <video muted preload="metadata" class="w-full h-32 object-cover rounded-3xl"> 
+                                <source src="${item.src}" type="video/mp4">
+                            </video>
+                        </button>`;
+                }
+                return `
+                    <button type="button" data-src="${item.src}" data-type="image" class="overflow-hidden rounded-3xl">
+                        <img src="${item.src}" alt="Energia Solar ${idx + 1}" class="w-full h-32 object-cover rounded-3xl">
+                    </button>`;
+            }).join('');
+
+            galleryContainer.innerHTML = galleryCards;
+
+            document.querySelectorAll('#solar-gallery button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const src = btn.getAttribute('data-src');
+                    const type = btn.getAttribute('data-type');
+                    setSolarMainMedia(src, type);
+                });
+            });
+
+            // set initial main media to first item (prefer video)
+            if (solarItems.length) {
+                setSolarMainMedia(solarItems[0].src, solarItems[0].type);
+            }
+        }
+
+        function setSolarMainMedia(src, type) {
+            const main = document.getElementById('solar-main-media');
+            if (!main) return;
+            if (type === 'video') {
+                main.innerHTML = `<video id="solar-main-video" controls playsinline class="w-full h-full object-cover"><source src="${src}" type="video/mp4"></video>`;
+                return;
+            }
+            main.innerHTML = `<img src="${src}" alt="Energia Solar" class="w-full h-full object-cover">`;
+        }
+
+        function openSolarGallery() {
+            const solarItems = [
+                { type: 'video', src: 'energia%20solar/WhatsApp%20Video%202026-06-16%20at%2009.54.23.mp4' },
+                { type: 'image', src: 'energia%20solar/antes.jpeg' }
+            ];
+
+            const galleryCards = solarItems.map(item => {
+                if (item.type === 'video') {
+                    return `
+                        <button type="button" onclick="openVideoModal('${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
+                            <div class="relative h-44 overflow-hidden rounded-3xl bg-black"><video src="${item.src}" muted preload="metadata" class="w-full h-full object-cover"></video><div class="absolute inset-0 flex items-center justify-center text-white text-3xl">▶</div></div>
+                            <div class="p-4">
+                                <p class="font-semibold text-sm text-gray-900">Projeto Solar</p>
+                                <p class="mt-2 text-xs text-gray-500">Vídeo</p>
+                            </div>
+                        </button>
+                    `;
+                }
+                return `
+                    <button type="button" onclick="openLightboxWithSrc('${item.src}')" class="group text-left overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
+                        <img src="${item.src}" alt="Energia Solar" class="w-full h-44 object-cover rounded-3xl">
+                        <div class="p-4">
+                            <p class="font-semibold text-sm text-gray-900">Projeto Solar</p>
+                            <p class="mt-2 text-xs text-gray-500">Imagem</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            const modal = document.createElement('div');
+            modal.id = 'solar-gallery-modal';
+            modal.className = 'fixed inset-0 z-[99999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-[2rem] bg-white shadow-2xl ring-1 ring-black/10">
+                    <button type="button" onclick="closeSolarGallery()" class="absolute top-4 right-4 z-50 text-3xl font-bold text-gray-900 hover:text-yellow-500">×</button>
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-2xl font-black text-gray-900">Energia Solar - Netcare</h2>
+                        <p class="mt-2 text-sm text-gray-600">Clique na imagem para ampliar.</p>
+                    </div>
+                    <div class="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
+                        ${galleryCards}
+                    </div>
+                </div>
+            `;
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'solar-gallery-modal') closeSolarGallery();
+            });
+            document.body.appendChild(modal);
+            document.removeEventListener('keydown', handleGalleryKeydown);
+            document.addEventListener('keydown', handleGalleryKeydown);
+        }
+
+        function closeSolarGallery() {
+            const modal = document.getElementById('solar-gallery-modal');
+            if (modal) modal.remove();
+            document.removeEventListener('keydown', handleGalleryKeydown);
+        }
+
+        // Initialize solar gallery on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initSolarGallery();
+        });
 
         // Fechar lightbox ao pressionar "ESC"
         document.addEventListener('keydown', (e) => {
