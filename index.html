@@ -126,47 +126,6 @@
             }
         }
 
-        /* Diagrama de Venn (Propósito) */
-        .venn-circle {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            position: absolute;
-            mix-blend-mode: multiply;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-family: 'Ubuntu', sans-serif;
-            font-size: 1.15rem;
-            text-align: center;
-            border: 4px solid;
-            background-color: rgba(255, 255, 255, 0.95);
-            transition: all 0.3s ease;
-        }
-        .venn-container {
-            position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 0 auto;
-        }
-        .venn-top { top: 0; left: 70px; border-color: #390ea6; color: #390ea6; z-index: 2; }
-        .venn-left { bottom: 30px; left: 0; border-color: #e5e7eb; color: #4a4a4a; z-index: 1; }
-        .venn-right { bottom: 30px; right: 0; border-color: #e5e7eb; color: #4a4a4a; z-index: 1; }
-        .venn-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -30%);
-            z-index: 10;
-            font-size: 0.85rem;
-            font-weight: 900;
-            color: #390ea6;
-            background: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-
         /* Lightbox para visualização de imagens */
         #lightbox {
             display: none;
@@ -458,63 +417,6 @@
                 </div>
             </div>
 
-            <!-- DEPOIS (Frota Atual) -->
-            <div class="fade-up">
-                <div class="flex items-center space-x-4 mb-8">
-                    <span class="text-netcare-purple font-bold uppercase tracking-widest text-sm border border-netcare-purple px-4 py-1.5 rounded bg-netcare-purple/5">O Presente</span>
-                    <h3 class="text-3xl font-bold text-gray-800">Infraestrutura Pesada e Mobilidade</h3>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
-                    <!-- Caminhão Munck Novo -->
-                    <div class="lg:col-span-5 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center flex flex-col justify-between">
-                        <div class="h-80 flex items-center justify-center mb-6">
-                            <img id="truck-gallery-trigger" src="Gemini_Generated_Image_1zhpmg1zhpmg1zhp.png" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img cursor-pointer" alt="Caminhão Munck">
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-xl text-netcare-purple">Caminhão Munck</h4>
-                            <p class="text-gray-500 text-sm mt-3 leading-relaxed">Força bruta para operações de içamento, instalação de postes e implantação de redes pesadas.</p>
-                        </div>
-                    </div>
-
-                    <!-- Perfuratriz -->
-                    <div class="lg:col-span-7 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center flex flex-col justify-between relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-netcare-yellow text-netcare-dark text-xs font-bold px-5 py-2.5 rounded-bl-xl">DESTAQUE TECNOLÓGICO: MND</div>
-                        <div class="h-80 flex items-center justify-center mb-6 mt-4">
-                            <img src="https://files.catbox.moe/oppge8.webp" class="max-h-full w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500 clickable-img" alt="Perfuratriz">
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-xl text-netcare-purple">Perfuratriz Direcional D6x6</h4>
-                            <p class="text-gray-500 text-sm mt-3 leading-relaxed">Método Não Destrutivo (MND). Equipamento de alta precisão para expansão subterrânea sem abertura de valas, reduzindo drasticamente o impacto urbano.</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Frota Leve e Ágil -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
-                        <div class="h-48 flex items-center justify-center mb-6">
-                            <img src="https://files.catbox.moe/jty6yz.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Sprinter">
-                        </div>
-                        <h4 class="font-bold text-gray-800 text-base">Sprinter</h4>
-                    </div>
-                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
-                        <div class="h-48 flex items-center justify-center mb-6">
-                            <img src="https://files.catbox.moe/yf5wau.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Fiorino">
-                        </div>
-                        <h4 class="font-bold text-gray-800 text-base">Fiorino</h4>
-                    </div>
-                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm text-center">
-                        <div class="h-48 flex items-center justify-center mb-6">
-                            <img src="https://files.catbox.moe/pbuy6h.webp" class="max-h-full w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-500 clickable-img" alt="Veículo Leve">
-                        </div>
-                        <h4 class="font-bold text-gray-800 text-base">Veículos</h4>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </section>
 
@@ -751,13 +653,10 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     
-                    <!-- Diagrama de Venn (Esquerda) -->
+                    <!-- Imagem de Propósito (Esquerda) -->
                     <div class="flex justify-center order-2 lg:order-1">
-                        <div class="venn-container transform scale-90 sm:scale-100">
-                            <div class="venn-circle venn-top">Técnica</div>
-                            <div class="venn-circle venn-left">Propósito</div>
-                            <div class="venn-circle venn-right">Pessoas</div>
-                            <div class="venn-center">Excelência</div>
+                        <div class="w-full max-w-xl overflow-hidden rounded-2xl bg-white">
+                            <img src="https://files.catbox.moe/fa8w9z.png" alt="Diagrama do alinhamento de propósito da Netcare" class="w-full h-auto object-contain" loading="lazy">
                         </div>
                     </div>
                     
